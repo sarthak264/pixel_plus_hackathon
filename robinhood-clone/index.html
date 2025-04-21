@@ -5,10 +5,2176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Robinhood Clone</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --lime: #ccff00;
+            --text: #110E08;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @font-face {
+            font-family: 'Phonic';
+            src: url('./assets/fonts/Phonic-regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Phonic';
+            src: url('./assets/fonts/Phonic-bold.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'MartinaPlantjin';
+            src: url('./assets/fonts/MartinaPlantijn-Regular.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        img,
+        video,
+        picture {
+            max-width: 100%;
+        }
+
+        svg {
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'MartinaPlantjin';
+        }
+
+        p,
+        a,
+        span {
+            font-family: 'Phonic';
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            font-style: normal;
+            letter-spacing: -0.25px;
+            margin: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            min-width: 112px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 32px;
+
+            background-color: transparent;
+            text-align: center;
+            border-radius: 36px;
+
+            overflow: hidden;
+            white-space: nowrap;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        .btn.outline {
+            background-color: transparent;
+            border-color: var(--lime);
+            color: var(--lime);
+        }
+
+        .btn.filled {
+            background-color: var(--lime);
+            border-color: var(--lime);
+            color: var(--black);
+        }
+
+        .btn span {
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: -0.25px;
+            line-height: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .btn {
+                min-width: 118px;
+            }
+        }
+
+        /* nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 64px;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            z-index: 999;
+
+            font-family: 'Phonic';
+            color: var(--white);
+            background-color: var(--black);
+            border-bottom: 1px solid #808080;
+        }
+
+        a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .main-logo-svg {
+            display: block;
+            fill: var(--white);
+            stroke-width: 0;
+        }
+
+        .nav-links-wrapper {
+            display: none;
+            margin-left: 36px;
+        }
+
+        .nav-links-wrapper ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links-wrapper ul li {
+            margin-left: 36px;
+        }
+
+        .nav-links-wrapper ul li a {
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: -0.25px;
+            line-height: 24px;
+        }
+
+        .nav-links-wrapper ul li a:hover {
+            color: var(--lime);
+        }
+
+        #submenu-trigger {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .down-arrow-span {
+            /* display: flex; */
+            margin-left: 8px;
+            padding-top: 4px;
+            vertical-align: middle;
+        }
+
+        .down-arrow-span.rotate {
+            transition: transform 0.3s ease-in-out;
+            transform: rotate(180deg);
+        }
+
+        .nav-arrow {
+            /* padding-top: 4px; */
+            transform: translate(0, 30%);
+        }
+
+        .nav-arrow.rotate {
+            transform: rotate(180deg);
+        }
+
+        nav .language {
+            display: none;
+            visibility: hidden;
+            margin: 0 0 0 auto;
+            position: relative;
+        }
+
+        .lang-submenu {
+            display: none;
+            visibility: hidden;
+            position: absolute;
+            top: 38px;
+            left: 0;
+            width: 80px;
+            background-color: var(--black);
+            border-radius: 0 0 5px 5px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 4px 0px;
+            overflow: hidden;
+        }
+
+        .lang-submenu.visible {
+            display: block;
+            visibility: visible;
+        }
+
+        .lang-submenu ul {
+            list-style: none;
+        }
+
+        .lang-submenu ul li {
+            height: 35px;
+        }
+
+        .lang-submenu button svg {
+            color: var(--black);
+        }
+
+        nav .language button {
+            display: flex;
+            align-items: center;
+            border: none;
+            outline: none;
+
+            background-color: var(--black);
+            font-family: 'Phonic';
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: -0.25px;
+            color: var(--white);
+            /* padding: 5px; */
+            margin-right: 16px;
+        }
+
+        nav .language button:hover {
+            color: var(--lime);
+            cursor: pointer;
+        }
+
+        nav .language button span {
+            margin-left: 4px;
+            margin-right: 12px;
+            padding-top: 4px;
+        }
+
+        .nav-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        nav .btn {
+            padding-top: 2px;
+        }
+
+        #login-btn {
+            display: none;
+        }
+
+        .ham-menu {
+            padding-left: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* .ham-menu .ham-one,
+        .ham-menu .ham-two {
+            transform: rotate(0deg) translate3d(0px, 0px, 0px);
+            transition: transform 300ms;
+        } */
+
+        .ham-menu.animate .ham-one {
+            transform-origin: center center 0px;
+            transition: transform 300ms;
+            transform: rotate(-45deg) translate3d(0px, 6.5px, 0px);
+        }
+
+        .ham-menu.animate .ham-two {
+            transform-origin: center center 0px;
+            transition: transform 300ms;
+            transform: rotate(45deg) translate3d(0px, -6.5px, 0px);
+        }
+
+        nav .submenu {
+            display: none;
+            visibility: hidden;
+            position: absolute;
+            left: -36px;
+            top: 44px;
+            padding: 12px 38px 36px;
+            background-color: var(--black);
+            box-shadow: rgba(0, 0, 0, 0.75) 0px 1px 2px -1px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        nav .submenu.show {
+            display: block;
+            visibility: visible;
+        }
+
+        .submenu ul {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .submenu ul li {
+            margin-left: 0;
+            min-width: 122px;
+        }
+
+        .mobile-menu {
+            display: none;
+            visibility: hidden;
+            position: fixed;
+            inset: 64px 0 32px;
+            height: 100vh;
+            padding: 24px;
+            background-color: var(--black);
+        }
+
+        .mobile-menu.visible {
+            display: block;
+            visibility: visible;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            padding-top: 16px;
+            gap: 16px;
+        }
+
+        .mobile-menu ul li a {
+            font-size: 32px;
+            font-weight: 400;
+            line-height: 34px;
+            letter-spacing: -0.5px;
+        }
+
+        .mobile-menu ul li a:hover {
+            color: var(--lime);
+        }
+
+        @media (max-width: 425px) {
+            .btn span {
+                font-size: 14px;
+                line-height: 22px;
+            }
+
+            nav .nav-btn-wrapper {
+                margin-left: auto;
+            }
+        }
+
+        @media (min-width: 426px) {
+            nav .language {
+                display: inline-flex;
+                visibility: visible;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .nav-links-wrapper {
+                display: block;
+            }
+
+            nav .language button {
+                margin-right: 38px;
+            }
+
+            .ham-menu {
+                display: none;
+                visibility: hidden;
+            }
+
+            #login-btn {
+                display: inline-flex;
+            }
+        }
+
+        @media (min-width: 768px) {
+            nav {
+                padding: 0 24px 0 36px;
+            }
+        }
+
+        /* header */
+        .header {
+            position: relative;
+            padding-top: 64px;
+            display: grid;
+            place-content: center;
+        }
+
+        .video-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            overflow: hidden;
+            z-index: -999;
+        }
+
+        .video-container video {
+            object-fit: cover;
+            max-width: unset;
+        }
+
+        .header-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 300px;
+            padding-top: 80px;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .header-content .title {
+            font-size: 60px;
+            line-height: 63px;
+            letter-spacing: -0.5px;
+            color: var(--white);
+
+            margin-bottom: 24px;
+        }
+
+        .header-content .lead-text {
+            font-family: 'Phonic';
+            font-size: 22px;
+            line-height: 26px;
+            letter-spacing: -0.25px;
+            color: var(--white);
+
+            margin-bottom: 29px;
+        }
+
+        @media (min-width: 426px) {
+            .header-content .title {
+                font-size: 80px;
+                line-height: 80px;
+                letter-spacing: -0.5px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                height: 960px;
+            }
+
+            .header-content {
+                max-width: 600px;
+                padding-bottom: 0;
+                padding-top: 0;
+            }
+
+            .header-content .title {
+                margin-bottom: 32px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .header-content {
+                max-width: 825px;
+            }
+
+            .header-content .title {
+                font-size: 110px;
+                line-height: 110px;
+                letter-spacing: -0.5px;
+            }
+        }
+
+        /* tile */
+        .tile {
+            position: relative;
+            /* background-color: var(--black); */
+        }
+
+        .tile-bg {
+            background-color: var(--black);
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: -999;
+        }
+
+        .tile-bg img {
+            display: block;
+            margin: auto;
+            max-width: 100%;
+            object-fit: cover;
+            object-position: center center;
+            user-select: none;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            height: 100%;
+            width: 100%;
+        }
+
+        .tile-wrapper {
+            max-width: 90%;
+            margin: 0 auto;
+            color: var(--white);
+        }
+
+        .tile-content-wrapper {
+            max-width: 90%;
+            padding: 80px 0 600px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .tile-content-wrapper .header-img {
+            height: 26px;
+            margin-bottom: 24px;
+        }
+
+        .tile-content-wrapper .heading {
+            font-family: 'Phonic';
+            font-size: 28px;
+            line-height: 34px;
+            letter-spacing: -0.34px;
+            font-weight: 400;
+        }
+
+        .tile-content-wrapper .heading.green-accent {
+            color: var(--lime);
+        }
+
+        .tile-content-wrapper .lead-text {
+            margin-top: 16px;
+            margin-bottom: 24px;
+        }
+
+        .tile-content-wrapper .disclosure {
+            margin: -8px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tile-content-wrapper .disclosure a {
+            font-size: 12px;
+            line-height: 19px;
+            letter-spacing: -0.1px;
+            color: var(--text);
+        }
+
+        .tile-content-wrapper .disclosure a:hover {
+            opacity: 0.5;
+        }
+
+        .tile-wrapper .disclaimer {
+            font-size: 12px;
+            line-height: 19px;
+            letter-spacing: -0.1px;
+            padding-bottom: 24px;
+        }
+
+        @media (min-width: 426px) {
+            .tile-content-wrapper .heading {
+                font-size: 34px;
+                line-height: 40px;
+                letter-spacing: -1px;
+            }
+
+            .tile-content-wrapper .heading.green-accent {
+                letter-spacing: -0.5px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .tile {
+                height: 800px;
+            }
+
+            .tile-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100%;
+            }
+
+            .tile-content-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                flex: 1;
+                padding: 0;
+                max-width: 340px;
+                margin-left: 45%;
+                margin-right: 10%;
+            }
+
+            .disclaimer {
+                max-width: 340px;
+                margin-left: 45%;
+                margin-right: 10%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .tile-content-wrapper {
+                max-width: 400px;
+            }
+
+            .tile-content-wrapper .heading {
+                font-size: 40px;
+                line-height: 48px;
+                letter-spacing: -1px;
+            }
+        }
+
+        /* first tile */
+        .tile#first .disclaimer {
+            color: #d0d0d0;
+        }
+
+        .tile#first .disclaimer a {
+            color: #d0d0d0;
+            text-decoration: underline;
+            text-decoration-color: #d0d0d0;
+        }
+
+        /* second tile */
+        .tile#second .tile-wrapper {
+            color: var(--text);
+        }
+
+        .tile#second .tile-content-wrapper {
+            padding-top: 52px;
+        }
+
+        .tile#second .btn {
+            background-color: var(--text);
+            border-color: var(--text);
+            color: var(--white);
+        }
+
+        /* third tile */
+        .tile#third .lead-text:last-of-type {
+            margin-top: 0;
+        }
+
+        .tile#third .disclaimer {
+            color: var(--text);
+        }
+
+        @media (min-width: 768px) {
+            .tile#third .tile-content-wrapper {
+                max-width: 440px;
+                margin-left: 5%;
+                margin-right: 45%;
+            }
+
+            .tile#third .tile-content-wrapper .header-img {
+                height: 32px;
+                margin-bottom: 32px;
+            }
+
+            .tile#third .tile-content-wrapper .heading {
+                margin-bottom: 32px;
+            }
+
+            .tile#third .disclaimer {
+                max-width: 440px;
+                margin-left: 5%;
+                margin-right: 45%;
+            }
+        }
+
+        /* features */
+        .features {
+            padding: 50px 0;
+            color: var(--white);
+            background-color: #1c180d;
+        }
+
+        .features .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .features .heading {
+            font-family: 'Phonic';
+            font-size: 40px;
+            font-weight: 400;
+            line-height: 48px;
+            letter-spacing: -1px;
+            margin-bottom: 40px;
+        }
+
+        .features .btn {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        .swiper-wrapper {
+            margin: 50px 0 77px 0;
+        }
+
+        .swiper-slide {
+            min-height: 325px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .swiper-img {
+            user-select: none;
+            pointer-events: none;
+            margin-bottom: 24px;
+        }
+
+        .swiper-slide p {
+            max-width: 200px;
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: -0.25px;
+            line-height: 26px;
+        }
+
+        .swiper-pagination {
+            position: relative;
+            bottom: 0;
+            margin-bottom: 36px;
+        }
+
+        .swiper-pagination-bullet {
+            height: 6px;
+            width: 6px;
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .swiper-pagination-bullet-active {
+            background-color: var(--white) !important;
+        }
+
+        .features .desktop-grid {
+            display: none;
+        }
+
+        @media (min-width: 426px) {
+            .features .heading {
+                font-size: 48px;
+                letter-spacing: -1px;
+                line-height: 58px;
+                margin-bottom: 48px;
+            }
+
+            .swiper-slide p {
+                font-size: 20px;
+                line-height: 28px;
+                letter-spacing: -0.33px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .features .heading {
+                margin-bottom: 68px;
+                max-width: 700px;
+            }
+
+            .swiper {
+                display: none;
+            }
+
+            .features .desktop-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                width: 656px;
+                row-gap: 106px;
+                column-gap: 48px;
+                margin: 69px auto 127px;
+            }
+
+            .features .desktop-grid .swiper-slide p {
+                max-width: none;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .features .heading {
+                font-size: 52px;
+                line-height: 62px;
+                letter-spacing: -1.5px;
+            }
+
+            .features .desktop-grid .swiper-slide p {
+                font-size: 22px;
+                line-height: 30px;
+                letter-spacing: -0.5px;
+            }
+        }
+
+        /* preview */
+        .preview {
+            padding-top: 60px;
+            background-color: var(--lime);
+        }
+
+        .preview-content-wrapper {
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .preview .heading {
+            font-family: 'Phonic';
+            font-size: 40px;
+            line-height: 48px;
+            font-weight: 400;
+            margin: 12px 16px 24px 16px;
+            letter-spacing: -1px;
+        }
+
+        .preview .lead-text {
+            margin: 0 16px 36px 16px;
+        }
+
+        .preview .btn {
+            background-color: var(--text);
+            border-color: var(--text);
+            color: var(--white);
+            margin-bottom: 75px;
+        }
+
+        .preview picture,
+        .preview img {
+            max-width: 100%;
+            display: block;
+        }
+
+        @media (min-width: 426px) {
+            .preview .heading {
+                font-size: 52px;
+                line-height: 62px;
+                letter-spacing: -1.5px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .preview-content-wrapper {
+                width: 608px;
+            }
+
+            .preview picture,
+            .preview img {
+                max-width: 500px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .preview .heading {
+                letter-spacing: -2px;
+            }
+        }
+
+        /* cta */
+        .cta {
+            height: 704px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .cta .video-container {
+            position: absolute;
+            inset: 0;
+        }
+
+        .cta .video-container video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cta .gradient-overlay {
+            background-image: radial-gradient(50% 50% at 50% 50%, #110E08e3 40%, #110E0800 100%);
+            background-origin: border-box;
+            background-position-x: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            bottom: -20%;
+            left: -20%;
+            right: -20%;
+            top: -25%;
+            height: auto;
+            width: auto;
+            transform: none;
+            z-index: -1;
+        }
+
+        .cta-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            max-width: 80%;
+            padding: 250px 0;
+        }
+
+        .cta .heading {
+            font-size: 44px;
+            line-height: 48px;
+            color: var(--white);
+            margin-bottom: 32px;
+            max-width: 650px;
+        }
+
+        @media (min-width: 768px) {
+            .cta .gradient-overlay {
+                height: 335px;
+                width: 900px;
+                background-image: radial-gradient(50% 50% at 50% 50%, #110E08e3 40%, #110E0800 100%);
+                background-origin: border-box;
+                background-position-x: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: -1;
+            }
+
+            .cta-content-wrapper {
+                max-width: auto;
+                padding: 0;
+            }
+        }
+
+        @media (min-width: 426px) {
+            .cta .heading {
+                font-size: 58px;
+                line-height: 63px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .cta .heading {
+                font-size: 72px;
+                letter-spacing: -1px;
+                line-height: 78px;
+            }
+        }
+
+        /* footer */
+        .footer {
+            background-color: var(--lime);
+            color: var(--text);
+        }
+
+        .footer-top {
+            padding: 24px;
+            border-bottom: 1px solid #35322D;
+        }
+
+        .footer-top .social-links {
+            display: none !important;
+        }
+
+        .footer-top .footer-link-list {
+            list-style: none;
+        }
+
+        .footer-top .footer-link-list .link-seperator {
+            display: none;
+        }
+
+        .footer-top .footer-link-list .footer-link {
+            text-decoration: underline;
+            text-decoration-color: var(--text);
+        }
+
+        .footer .first-child {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-auto-rows: auto;
+            padding: 24px;
+        }
+
+        .footer .first-child .footer-link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+            padding: 24px 0;
+        }
+
+        .footer .footer-link {
+            color: var(--text);
+            letter-spacing: -0.25px;
+        }
+
+        .footer .footer-link-list>li:hover .footer-link {
+            opacity: 0.5;
+        }
+
+        .footer .second-child .content-wrapper {
+            padding: 24px;
+            padding-top: 0;
+        }
+
+        .footer .second-child .content-wrapper a {
+            color: var(--text);
+            text-decoration: underline;
+            text-decoration-color: var(--text);
+        }
+
+        .footer .second-child .content-wrapper a:hover {
+            opacity: 0.5;
+        }
+
+        .footer .social-links {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-top: 1px solid #35322D;
+        }
+
+        .footer .social-links>p {
+            display: none;
+            margin-top: 0 !important;
+            padding-right: 4px;
+        }
+
+        .footer .second-child p {
+            margin: 24px 0;
+            line-height: 25px;
+        }
+
+        .footer .second-child p:first-of-type {
+            margin-top: 16px;
+        }
+
+        .footer .second-child p:last-of-type {
+            margin-bottom: 0px;
+        }
+
+        .footer .logo {
+            margin-bottom: 4px;
+        }
+
+        @media (min-width: 426px) {
+            .footer .social-links>p {
+                display: inline-flex;
+            }
+
+            .footer .first-child {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer .first-child>div:nth-of-type(1) {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .footer .first-child>div:nth-of-type(3) {
+                grid-column: 2;
+                grid-row: 1;
+            }
+
+            .footer .first-child>div:nth-of-type(2) {
+                grid-column: 1;
+                grid-row: 2;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .footer-top .footer-link-list {
+                display: flex;
+                align-items: center;
+            }
+
+            .footer-top .footer-link-list .link-seperator {
+                display: inline-flex;
+                height: 26px;
+                width: 1px;
+                margin: 0 8px;
+                background-color: #35322D;
+            }
+
+            .footer .first-child {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer .first-child>div:nth-of-type(1) {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .footer .first-child>div:nth-of-type(3) {
+                grid-column: 2;
+                grid-row: 1;
+            }
+
+            .footer .first-child>div:nth-of-type(2) {
+                grid-column: 3;
+                grid-row: 1;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .footer-bottom {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-top .footer-link-list .link-seperator {
+                height: 36px;
+            }
+
+            .footer-top {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-top .social-links {
+                display: inline-flex !important;
+                padding: 0;
+                padding-left: 24px;
+            }
+
+            .footer .social-links {
+                border-top: none;
+                display: none;
+            }
+
+            .footer .second-child p:first-of-type {
+                margin-top: 24px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Hello World!</h1>
+    <nav>
+        <a href="#">
+            <svg id="Layer_1" viewBox="0 0 781.7 149.53" width="136px" xmlns="http://www.w3.org/2000/svg"
+                class="main-logo-svg">
+                <path class="cls-1"
+                    d="m275.4,52.23c-20.4,0-32.9,13.2-32.9,36.4s12.5,36.3,32.9,36.3,32.8-13.2,32.8-36.3-12.2-36.4-32.8-36.4Zm0,62.1c-12.9,0-18.1-10.6-18.1-25.6.1-15.2,5.2-25.7,18.1-25.7s18.1,10.5,18.1,25.6-5.2,25.7-18.1,25.7Z">
+                </path>
+                <path class="cls-1"
+                    d="m462.3,52.23c-10.1,0-16,4.6-20.4,10.5-.6.7-1.1,1.4-2.1,1.4s-1.8-.7-1.8-2.1v-8.4h-13.2v70h14v-38.6c0-12.5,6.7-21.4,17.2-21.4,9.9,0,14.8,5.7,14.8,18.1v41.9h14v-45.6c0-16.1-7.3-25.8-22.5-25.8Z">
+                </path>
+                <path class="cls-1"
+                    d="m537.1,52.23c-9.4,0-15.5,4.2-19.6,9.5-.6.7-1.1,1.4-2.1,1.4s-1.8-.7-1.8-2.1V23.43h-14v100.2h14v-38.6c0-12.5,6.7-21.4,17.2-21.4,9.9,0,14.8,5.7,14.8,18.1v41.9h14v-45.6c0-16.1-7.3-25.8-22.5-25.8Z">
+                </path>
+                <path class="cls-1"
+                    d="m603.3,52.23c-20.4,0-32.9,13.2-32.9,36.4s12.5,36.3,32.9,36.3,32.8-13.2,32.8-36.3c-.1-23.2-12.2-36.4-32.8-36.4Zm0,62.1c-12.9,0-18.1-10.6-18.1-25.6s5.2-25.6,18.1-25.6,18.1,10.5,18.1,25.6c-.1,14.9-5.2,25.6-18.1,25.6Z">
+                </path>
+                <path class="cls-1"
+                    d="m676.7,52.23c-20.4,0-32.9,13.2-32.9,36.4s12.5,36.3,32.9,36.3,32.8-13.2,32.8-36.3-12.2-36.4-32.8-36.4Zm0,62.1c-12.9,0-18.1-10.6-18.1-25.6s5.2-25.6,18.1-25.6,18.1,10.5,18.1,25.6-5.2,25.6-18.1,25.6Z">
+                </path>
+                <rect class="cls-1" height="70" width="14" x="395.6" y="53.63"></rect>
+                <rect class="cls-1" height="16" width="15" x="395" y="23.43"></rect>
+                <path class="cls-1"
+                    d="m767.7,23.43v35.8c0,1.4-.8,2.1-1.8,2.1-.7,0-1.7-.7-2.1-1.1-5-5.3-10.4-8-18.9-8-15.1,0-27.4,11.6-27.4,36.4s12.3,36.3,27.4,36.3c8.8,0,14.3-3.4,19.6-8.7.8-.8,1.4-1.3,2.1-1.3,1,0,1.8.7,1.8,2.1v6.6h13.3V23.43h-14Zm-17.5,90.8c-12.9.1-18.1-10.6-18.1-25.6s5.2-25.6,18.1-25.6,18.1,10.5,18.1,25.6-5,25.6-18.1,25.6Z">
+                </path>
+                <path class="cls-1"
+                    d="m356.6,52.23c-8.5,0-13.9,2.7-18.9,8-.4.4-1.4,1.1-2.1,1.1-1,0-1.8-.7-1.8-2.1V23.43h-14v100.2h13.2v-6.6c0-1.4.8-2.1,1.8-2.1.7,0,1.3.4,2.1,1.3,5.3,5.3,10.8,8.7,19.6,8.7,15.1,0,27.5-11.5,27.5-36.3s-12.3-36.4-27.4-36.4Zm-5.4,62.1c-13,0-18.1-10.6-18.1-25.6s5-25.6,18.1-25.6,18.1,10.5,18.1,25.6c0,14.9-5.2,25.6-18.1,25.6Z">
+                </path>
+                <path class="cls-1"
+                    d="m220.5,79.03c-1.1-.4-1.5-1.1-1.5-2,0-1,.4-1.4,1.7-2.1,7.6-3.6,12.2-10.8,12.2-20.6,0-17.2-10.8-27.6-32.5-27.6h-37.4v96.9h14.8v-40h23.9c11.3,0,15.1,4.8,15.4,12.6l1.4,27.4h14.6l-1.5-28.4c-.6-9.4-4.3-13.7-11.1-16.2Zm-21.1-6.9h-21.6v-33.6h21.6c11.2,0,18.1,5.5,18.1,16.8s-6.9,16.8-18.1,16.8Z">
+                </path>
+                <path class="cls-1"
+                    d="m73.96,33.73h-30.4c-1.1,0-2.03.44-2.8,1.4l-21.8,27c-3.2,4-4,7.7-4,13v27.6C7.86,122.63,3.36,136.13.06,148.33c-.2.78.1,1.2.8,1.2h3.3c.6,0,1.2-.3,1.4-.8C30.46,85.33,57.56,53.93,74.56,35.13c.7-.8.4-1.4-.6-1.4Z">
+                </path>
+                <path class="cls-1"
+                    d="m74.86,2.63c-2.04.79-4,2.13-4.9,2.9-9,7.7-15,13.8-20.7,19.8-.7.7-.4,1.4.6,1.4h33.7c3.1,0,4.9,1.8,4.9,4.9v38c0,1,.8,1.3,1.4.4l20.3-26.5c3.3-4.3,4.3-5.6,5.2-11.6,1.2-8.8.5-22.3-4.8-27.9-4.7-5-25.9-5.2-35.7-1.4Z">
+                </path>
+                <path class="cls-1"
+                    d="m79.96,41.33c-20.9,23.3-37.2,47.8-52.3,77.3-.38.74.1,1.4,1,1.1l31.2-9.6c3.52-1.08,5.5-2.5,7.2-5.3l13.9-22.9c.3-.6.4-1.3.4-1.8v-38.2c0-1-.7-1.4-1.4-.6Z">
+                </path>
+            </svg>
+        </a>
+        <div class="nav-links-wrapper">
+            <ul>
+                <li style="position: relative;">
+                    <a href="#" id="submenu-trigger">
+                        What We Offer
+                        <!-- <span class="down-arrow-span"> -->
+                        <svg fill="currentColor" viewBox="0 0 12 12" height="12" width="12" class="nav-arrow">
+                            <path d="M1.41 0L6 4.58L10.59 0L12 1.41L6 7.41L0 1.41L1.41 0Z" class="css-wenuco">
+                            </path>
+                        </svg>
+                        <!-- </span> -->
+                    </a>
+                    <div class="submenu">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    Invest
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Crypto
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Retirement
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Options
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Futures
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Trading
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Banking
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Credit Card
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">Strategies</a>
+                </li>
+                <li>
+                    <a href="#">Gold</a>
+                </li>
+                <li>
+                    <a href="#">Legend</a>
+                </li>
+                <li>
+                    <a href="#">Learn</a>
+                </li>
+                <li>
+                    <a href="#">Support</a>
+                </li>
+            </ul>
+        </div>
+        <div class="language">
+            <button>
+                <svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668M14.6666 8.00016C14.6666 4.31826 11.6818 1.3335 7.99992 1.3335M14.6666 8.00016H1.33325M7.99992 14.6668C4.31802 14.6668 1.33325 11.6821 1.33325 8.00016M7.99992 14.6668C9.66744 12.8413 10.6151 10.4721 10.6666 8.00016C10.6151 5.52819 9.66744 3.15906 7.99992 1.3335M7.99992 14.6668C6.3324 12.8413 5.38475 10.4721 5.33325 8.00016C5.38475 5.52819 6.3324 3.15906 7.99992 1.3335M1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335"
+                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.833333">
+                    </path>
+                </svg>
+                <span>US</span>
+                <svg fill="currentColor" viewBox="0 0 12 12" height="12" width="12" class="nav-arrow">
+                    <path d="M1.41 0L6 4.58L10.59 0L12 1.41L6 7.41L0 1.41L1.41 0Z" class="css-wenuco">
+                    </path>
+                </svg>
+            </button>
+            <div class="lang-submenu">
+                <ul>
+                    <li>
+                        <button>
+                            <svg fill="none" height="16" viewBox="0 0 16 16" width="16"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668M14.6666 8.00016C14.6666 4.31826 11.6818 1.3335 7.99992 1.3335M14.6666 8.00016H1.33325M7.99992 14.6668C4.31802 14.6668 1.33325 11.6821 1.33325 8.00016M7.99992 14.6668C9.66744 12.8413 10.6151 10.4721 10.6666 8.00016C10.6151 5.52819 9.66744 3.15906 7.99992 1.3335M7.99992 14.6668C6.3324 12.8413 5.38475 10.4721 5.33325 8.00016C5.38475 5.52819 6.3324 3.15906 7.99992 1.3335M1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335"
+                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="0.833333">
+                                </path>
+                            </svg>
+                            <span>UK</span>
+                            <svg fill="currentColor" viewBox="0 0 12 12" height="12" width="12" class="nav-arrow">
+                                <path d="M1.41 0L6 4.58L10.59 0L12 1.41L6 7.41L0 1.41L1.41 0Z" class="css-wenuco">
+                                </path>
+                            </svg>
+                        </button>
+                    </li>
+                    <li>
+                        <button>
+                            <svg fill="none" height="16" viewBox="0 0 16 16" width="16"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668M14.6666 8.00016C14.6666 4.31826 11.6818 1.3335 7.99992 1.3335M14.6666 8.00016H1.33325M7.99992 14.6668C4.31802 14.6668 1.33325 11.6821 1.33325 8.00016M7.99992 14.6668C9.66744 12.8413 10.6151 10.4721 10.6666 8.00016C10.6151 5.52819 9.66744 3.15906 7.99992 1.3335M7.99992 14.6668C6.3324 12.8413 5.38475 10.4721 5.33325 8.00016C5.38475 5.52819 6.3324 3.15906 7.99992 1.3335M1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335"
+                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="0.833333">
+                                </path>
+                            </svg>
+                            <span>EU</span>
+                            <svg fill="currentColor" viewBox="0 0 12 12" height="12" width="12" class="nav-arrow">
+                                <path d="M1.41 0L6 4.58L10.59 0L12 1.41L6 7.41L0 1.41L1.41 0Z" class="css-wenuco">
+                                </path>
+                            </svg>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="nav-btn-wrapper">
+            <a href="#" class="btn outline" id="login-btn">
+                <span>Log in</span>
+            </a>
+            <a href="#" class="btn filled" id="signup-btn">
+                <span>Sign up</span>
+            </a>
+        </div>
+        <div class="ham-menu">
+            <svg aria-hidden="true" fill="#FFFFFF" height="30" width="30">
+                <g class="ham-one">
+                    <rect fill="transparent" height="30" width="30" x="0" y="0"></rect>
+                    <rect height="3" width="30" x="0" y="7"></rect>
+                </g>
+                <g class="ham-two">
+                    <rect fill="transparent" height="30" width="30" x="0" y="0"></rect>
+                    <rect height="3" width="30" x="0" y="20"></rect>
+                </g>
+            </svg>
+        </div>
+        <div class="mobile-menu">
+            <ul>
+                <li>
+                    <a href="#">
+                        Invest
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Crypto
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Retirement
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Options
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Futures
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Trading
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Banking
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Credit Card
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Strategies
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Gold
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Legend
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Learn
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Support
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Login
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <header class="header">
+        <div class="video-container">
+            <video loop muted playsinline autoplay preload="auto" class="header-video-bg">
+                <source media="(max-width: 768px)" src="./assets/videos/BATS_HPTO_Mobile_Final.webm" type="video/webm">
+                <source src="./assets/videos/BATS_HPTO_FINAL.webm" type="video/webm">
+                <img alt="Built for the Future of Trading" src="./assets/images/wide_bats_end_4k.jpeg"
+                    class="header-video-fb">
+            </video>
+        </div>
+        <div class="header-content">
+            <h1 class="title">
+                Built for the Future of Trading
+            </h1>
+            <p class="lead-text">
+                Analyze, buy, and sell with tools purpose-built for how you trade.
+            </p>
+            <a href="#" class="btn filled">
+                <span>Sign up</span>
+            </a>
+        </div>
+    </header>
+    <section class="tile" id="first">
+        <div class="tile-bg">
+            <img src='./assets/images/web_homepage_investing_2.jpeg' alt="">
+        </div>
+        <div class="tile-wrapper">
+            <div class="tile-content-wrapper">
+                <h2 class="heading green-accent">
+                    Intuitive trading tools
+                </h2>
+                <h2 class="heading">
+                    Build your strategy and track market trends, seamlessly
+                </h2>
+                <p class="lead-text">
+                    Trade stocks, options, crypto, and more on
+                    <br>
+                    Robinhood Legend and the Robinhood app.
+                </p>
+                <a href="#" class="btn filled">
+                    <span>Learn more</span>
+                </a>
+            </div>
+            <p class="disclaimer">
+                Stocks & funds offered through Robinhood Financial. Crypto offered through Robinhood Crypto. See our <a
+                    href="#">Fee Schedule</a> for more details.
+            </p>
+        </div>
+    </section>
+    <section class="tile" id="second">
+        <div class="tile-bg">
+            <img src='./assets/images/web_crypto_hero.jpg' alt="">
+        </div>
+        <div class="tile-wrapper">
+            <div class="tile-content-wrapper">
+                <svg aria-label="Robinhood Crypto Logo" height="100%" class="header-img" role="img"
+                    viewBox="0 0 1199.7 149.5" class="css-sbmc1b">
+                    <g>
+                        <path
+                            d="M866.8,33.1c17.9,0,26.6,11.7,28.4,25.4h9c-1.9-20-15.2-33.4-37.3-33.4c-25,0-42,19-42,50.1 c0,31.1,17,50.1,42,50.1c22.1,0,35.3-13.4,37.3-33.4h-9c-1.8,13.7-10.5,25.4-28.4,25.4c-19.5,0-32.7-15.2-32.7-42.1 C834.1,48.4,847.2,33.1,866.8,33.1z">
+                        </path>
+                        <path
+                            d="M931.5,63.6c-0.7,1.1-1,1.2-1.7,1.2s-1.1-0.6-1.1-1.4v-9.7H921v69.9h8.3V83c0-12.8,8.1-21.8,19.3-21.8 c1.5,0,5,0.3,6.8,0.6l0.1-8.7c-1.9-0.4-3.6-0.6-5.4-0.6C942.3,52.5,935.4,57.3,931.5,63.6z">
+                        </path>
+                        <path
+                            d="M994,110.5c-0.3,0.7-0.7,1-1.2,1c-0.6,0-1-0.3-1.2-1L971,53.8h-8.8l26.4,70.5l-2.9,7.7 c-2.2,6.1-5.4,8.8-10.5,8.8c-2.6,0-4.7-0.6-6.8-1.4l-2.5,7.2c2.2,1,5.8,1.8,9,1.8c9.8,0,14.6-5,18.2-14.6l30-80h-8.4L994,110.5z">
+                        </path>
+                        <path
+                            d="M1061.1,52.5c-7,0-14.1,2.5-19.6,8.8c-0.6,0.6-0.8,1-1.5,1s-1.1-0.6-1.1-1.4v-7.2h-7.7V147h8.3v-30 c0-0.8,0.4-1.4,1.1-1.4s1,0.4,1.5,1c4.6,5.1,10.6,8.3,19,8.3c16,0,28.3-12.4,28.3-36.2C1089.4,64.9,1077.1,52.5,1061.1,52.5z M1059.6,117.2c-15.2,0-21-12.1-21-28.6c0-16.6,5.8-28.6,21-28.6s21,12.1,21,28.6S1074.8,117.2,1059.6,117.2z">
+                        </path>
+                        <path
+                            d="M1124.5,117.2c-7.5,0-10.2-4.7-10.2-12.8v-43h20.2v-7.6h-20.2V35.3h-7.2V46c0,6.8-2.5,8.6-9,8.6h-0.8v6.8h8.7 v44.3c0,10.9,4.6,19.2,17.4,19.2c5.2,0,9.2-1.2,11.9-2.6l-2.1-6.9C1131.1,116.4,1127.5,117.2,1124.5,117.2z">
+                        </path>
+                        <path
+                            d="M1169.9,52.5c-18.6,0-29.8,13-29.8,36.2c0,23.3,11.2,36.2,29.8,36.2s29.8-12.8,29.8-36.2 C1199.7,65.5,1188.5,52.5,1169.9,52.5z M1169.9,117.2c-15.2,0-21-12-21-28.6c0-16.4,5.8-28.6,21-28.6s21,12.1,21,28.6 C1190.8,105.2,1185,117.2,1169.9,117.2z">
+                        </path>
+                        <path
+                            d="M275.4,52.2c-20.4,0-32.9,13.2-32.9,36.4c0,23.1,12.5,36.3,32.9,36.3c20.6,0,32.8-13.2,32.8-36.3 C308.2,65.4,296,52.2,275.4,52.2z M275.4,114.3c-12.9,0-18.1-10.6-18.1-25.6c0.1-15.2,5.2-25.7,18.1-25.7 c12.9,0,18.1,10.5,18.1,25.6C293.5,103.6,288.3,114.3,275.4,114.3z">
+                        </path>
+                        <path
+                            d="M462.3,52.2c-10.1,0-16,4.6-20.4,10.5c-0.6,0.7-1.1,1.4-2.1,1.4S438,63.4,438,62v-8.4h-13.2v70h14V85 c0-12.5,6.7-21.4,17.2-21.4c9.9,0,14.8,5.7,14.8,18.1v41.9h14V78C484.8,61.9,477.5,52.2,462.3,52.2z">
+                        </path>
+                        <path
+                            d="M537.1,52.2c-9.4,0-15.5,4.2-19.6,9.5c-0.6,0.7-1.1,1.4-2.1,1.4s-1.8-0.7-1.8-2.1V23.4h-14v100.2h14V85 c0-12.5,6.7-21.4,17.2-21.4c9.9,0,14.8,5.7,14.8,18.1v41.9h14V78C559.6,61.9,552.3,52.2,537.1,52.2z">
+                        </path>
+                        <path
+                            d="M603.3,52.2c-20.4,0-32.9,13.2-32.9,36.4c0,23.1,12.5,36.3,32.9,36.3c20.6,0,32.8-13.2,32.8-36.3 C636,65.4,623.9,52.2,603.3,52.2z M603.3,114.3c-12.9,0-18.1-10.6-18.1-25.6c0-15.1,5.2-25.6,18.1-25.6c12.9,0,18.1,10.5,18.1,25.6 C621.3,103.6,616.2,114.3,603.3,114.3z">
+                        </path>
+                        <path
+                            d="M676.7,52.2c-20.4,0-32.9,13.2-32.9,36.4c0,23.1,12.5,36.3,32.9,36.3c20.6,0,32.8-13.2,32.8-36.3 C709.5,65.4,697.3,52.2,676.7,52.2z M676.7,114.3c-12.9,0-18.1-10.6-18.1-25.6c0-15.1,5.2-25.6,18.1-25.6 c12.9,0,18.1,10.5,18.1,25.6C694.8,103.6,689.6,114.3,676.7,114.3z">
+                        </path>
+                        <rect height="70" width="14" x="395.6" y="53.6"></rect>
+                        <rect height="16" width="15" x="395" y="23.4"></rect>
+                        <path
+                            d="M74,33.7H43.6c-1.1,0-2.1,0.4-2.8,1.4L19,62.1c-3.2,4-4,7.7-4,13v27.6c-7.1,19.9-11.6,33.4-14.9,45.6 c-0.3,0.8,0.1,1.2,0.8,1.2h3.3c0.6,0,1.1-0.3,1.4-0.8c24.9-63.4,52-94.8,69-113.6C75.3,34.3,75,33.7,74,33.7z">
+                        </path>
+                        <path
+                            d="M74.9,2.6C73,3.5,72,3.7,70,5.5c-9,7.7-15,13.8-20.7,19.8c-0.7,0.7-0.4,1.4,0.6,1.4h33.7 c3.1,0,4.9,1.8,4.9,4.9v38c0,1,0.8,1.3,1.4,0.4l20.3-26.5c3.3-4.3,4.3-5.6,5.2-11.6c1.2-8.8,0.5-22.3-4.8-27.9 C105.9-1,84.7-1.2,74.9,2.6z">
+                        </path>
+                        <path
+                            d="M80,41.3c-20.9,23.3-37.2,47.8-52.3,77.3c-0.4,0.8,0.1,1.4,1,1.1l31.2-9.6c3.5-0.9,5.5-2.5,7.2-5.3L81,81.9 c0.3-0.6,0.4-1.3,0.4-1.8V41.9C81.4,40.9,80.7,40.5,80,41.3z">
+                        </path>
+                        <path
+                            d="M767.7,59.2c0,1.4-0.8,2.1-1.8,2.1c-0.7,0-1.7-0.7-2.1-1.1c-5-5.3-10.4-8-18.9-8c-15.1,0-27.4,11.6-27.4,36.4 c0,24.8,12.3,36.3,27.4,36.3c8.8,0,14.3-3.4,19.6-8.7c0.8-0.8,1.4-1.3,2.1-1.3c1,0,1.8,0.7,1.8,2.1v6.6h13.3V23.4h-14V59.2z M750.2,114.2c-12.9,0.1-18.1-10.6-18.1-25.6c0-15.1,5.2-25.6,18.1-25.6c13,0,18.1,10.5,18.1,25.6 C768.3,103.6,763.3,114.2,750.2,114.2z">
+                        </path>
+                        <path
+                            d="M356.6,52.2c-8.5,0-13.9,2.7-18.9,8c-0.4,0.4-1.4,1.1-2.1,1.1c-1,0-1.8-0.7-1.8-2.1V23.4h-14v100.2H333V117 c0-1.4,0.8-2.1,1.8-2.1c0.7,0,1.3,0.4,2.1,1.3c5.3,5.3,10.8,8.7,19.6,8.7c15.1,0,27.5-11.5,27.5-36.3 C384,63.8,371.7,52.2,356.6,52.2z M351.2,114.3c-13,0-18.1-10.6-18.1-25.6c0-15.1,5-25.6,18.1-25.6c12.9,0,18.1,10.5,18.1,25.6 C369.3,103.6,364.1,114.3,351.2,114.3z">
+                        </path>
+                        <path
+                            d="M220.5,79c-1.1-0.4-1.5-1.1-1.5-2c0-1,0.4-1.4,1.7-2.1c7.6-3.6,12.2-10.8,12.2-20.6 c0-17.2-10.8-27.6-32.5-27.6H163v96.9h14.8v-40h23.9c11.3,0,15.1,4.8,15.4,12.6l1.4,27.4h14.6l-1.5-28.4 C231,85.8,227.3,81.5,220.5,79z M199.4,72.1h-21.6V38.5h21.6c11.2,0,18.1,5.5,18.1,16.8S210.6,72.1,199.4,72.1z">
+                        </path>
+                    </g>
+                </svg>
+                <h2 class="heading">
+                    Get started with Robinhood Crypto
+                </h2>
+                <h2 class="heading">
+                    Trade crypto 24/7
+                </h2>
+                <p class="lead-text">
+                    Start with as little as $1. Buy, sell, and transfer BTC, ETH, XRP, SOL, DOGE, SHIB, and more.
+                </p>
+                <div class="disclosure">
+                    <span>
+                        <svg fill="none" height="16" viewBox="0 0 39 38" width="16" class="css-1fmerug">
+                            <rect height="35.9222" rx="17.9611" stroke="currentColor" stroke-width="1.76667"
+                                width="35.9222" x="1.41654" y="0.916536"></rect>
+                            <path
+                                d="M18.2188 29.0396V14.6801H20.5649V29.0396H18.2188ZM19.3777 11.9665C18.4449 11.9665 17.7383 11.2598 17.7383 10.3553C17.7383 9.45075 18.4449 8.71582 19.3777 8.71582C20.3105 8.71582 21.0172 9.45075 21.0172 10.3553C21.0172 11.2598 20.3105 11.9665 19.3777 11.9665Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <a href="#">
+                        Crypto Risk Disclosures
+                    </a>
+                </div>
+                <a href="#" class="btn filled">
+                    <span>Learn more</span>
+                </a>
+            </div>
+            <p class="disclaimer">
+                Crypto offered through Robinhood Crypto.
+            </p>
+        </div>
+    </section>
+    <section class="tile" id="third">
+        <div class="tile-bg">
+            <img src='./assets/images/RH25_Strategiespromo_wide_homepage_hero.jpeg' alt="">
+        </div>
+        <div class="tile-wrapper">
+            <div class="tile-content-wrapper">
+                <svg aria-label="Robinhood Strategies Logo" height="100%" role="img" version="1.1" viewBox="0 0 302 33"
+                    class="header-img" fill="#ffffff">
+                    <g clip-path="url(#clip0_7165_40285)">
+                        <path
+                            d="M59.6066 11.2031C55.24 11.2031 52.5645 14.0285 52.5645 18.9944C52.5645 23.9389 55.24 26.7643 59.6066 26.7643C64.016 26.7643 66.6273 23.9389 66.6273 18.9944C66.6273 14.0285 64.016 11.2031 59.6066 11.2031ZM59.6066 24.4954C56.8454 24.4954 55.7323 22.2265 55.7323 19.0158C55.7537 15.7623 56.8454 13.5148 59.6066 13.5148C62.3678 13.5148 63.4808 15.7623 63.4808 18.9944C63.4808 22.2051 62.3678 24.4954 59.6066 24.4954Z">
+                        </path>
+                        <path
+                            d="M47.8565 16.9407C47.6211 16.8551 47.5355 16.7053 47.5355 16.5126C47.5355 16.3628 47.6639 16.1916 47.8351 16.0846C49.5047 15.2712 50.5107 13.7514 50.5107 11.6538C50.5107 7.97218 48.199 5.74609 43.5542 5.74609H35.5488V26.4872H38.7167V17.9254H43.8324C46.2512 17.9254 47.0645 18.9528 47.1288 20.6223L47.4284 26.4872H50.5535L50.2324 20.4083C50.104 18.3963 49.312 17.4759 47.8565 16.9407ZM43.3401 15.4638H38.7167V8.27185H43.3401C45.7375 8.27185 47.2144 9.4491 47.2144 11.8678C47.2144 14.308 45.7375 15.4638 43.3401 15.4638Z">
+                        </path>
+                        <path
+                            d="M164.981 12.7019C164.981 13.0016 164.81 13.1514 164.596 13.1514C164.446 13.1514 164.318 13.0658 164.211 12.9374C164.211 12.9374 164.19 12.916 164.147 12.916C163.076 11.7815 161.921 11.2036 160.101 11.2036C156.869 11.2036 154.236 13.6866 154.236 18.9949C154.236 24.3033 156.869 26.7648 160.101 26.7648C161.985 26.7648 163.248 26.1441 164.297 24.9026L164.361 24.8384C164.489 24.71 164.596 24.6243 164.746 24.6243C164.96 24.6243 165.131 24.7742 165.131 25.0738V26.4866H167.978V5.03906H164.981V12.7019ZM161.236 24.4959C158.474 24.4959 157.361 22.227 157.361 19.0163C157.361 15.7842 158.474 13.5367 161.236 13.5367C164.018 13.5367 165.11 15.7842 165.11 19.0163C165.11 22.2056 164.018 24.4959 161.236 24.4959Z">
+                        </path>
+                        <path
+                            d="M99.6107 11.2031C97.4489 11.2031 96.186 12.1877 95.2442 13.4506C95.1158 13.6004 95.0087 13.7503 94.7947 13.7503C94.5806 13.7503 94.4094 13.6004 94.4094 13.3008V11.5028H91.584V26.4861H94.5806V18.2239C94.5806 15.5483 96.0148 13.6433 98.2622 13.6433C100.381 13.6433 101.43 14.8633 101.43 17.5175V26.5075H104.427V16.7255C104.427 13.2794 102.864 11.2031 99.6107 11.2031Z">
+                        </path>
+                        <path
+                            d="M115.622 11.2036C113.61 11.2036 112.305 12.1026 111.427 13.2371C111.299 13.3869 111.192 13.5367 110.978 13.5367C110.764 13.5367 110.592 13.3869 110.592 13.0872V5.03906H107.596V26.4866H110.592V18.2243C110.592 15.5488 112.026 13.6437 114.274 13.6437C116.393 13.6437 117.442 14.8638 117.442 17.518V26.508H120.439V16.726C120.439 13.2799 118.876 11.2036 115.622 11.2036Z">
+                        </path>
+                        <path
+                            d="M129.794 11.2031C125.428 11.2031 122.752 14.0285 122.752 18.9944C122.752 23.9389 125.428 26.7643 129.794 26.7643C134.203 26.7643 136.815 23.9389 136.815 18.9944C136.793 14.0285 134.203 11.2031 129.794 11.2031ZM129.794 24.4954C127.033 24.4954 125.92 22.2265 125.92 19.0158C125.92 15.7837 127.033 13.5362 129.794 13.5362C132.555 13.5362 133.668 15.7837 133.668 19.0158C133.647 22.2051 132.555 24.4954 129.794 24.4954Z">
+                        </path>
+                        <path
+                            d="M145.505 11.2031C141.138 11.2031 138.463 14.0285 138.463 18.9944C138.463 23.9389 141.138 26.7643 145.505 26.7643C149.914 26.7643 152.526 23.9389 152.526 18.9944C152.526 14.0285 149.914 11.2031 145.505 11.2031ZM145.505 24.4954C142.744 24.4954 141.631 22.2265 141.631 19.0158C141.631 15.7837 142.744 13.5362 145.505 13.5362C148.266 13.5362 149.379 15.7837 149.379 19.0158C149.379 22.2051 148.266 24.4954 145.505 24.4954Z">
+                        </path>
+                        <path d="M88.3306 11.5039H85.334V26.4872H88.3306V11.5039Z"></path>
+                        <path d="M88.4158 5.03906H85.2051V8.46381H88.4158V5.03906Z"></path>
+                        <path
+                            d="M76.9648 11.2036C75.1026 11.2036 73.9682 11.7815 72.9193 12.8732L72.8551 12.9374C72.7267 13.0658 72.6197 13.1514 72.4698 13.1514C72.2558 13.1514 72.0845 13.0016 72.0845 12.7019V5.03906H69.0879V26.4866H71.9133V25.0738C71.9133 24.7742 72.0845 24.6243 72.2986 24.6243C72.4484 24.6243 72.5769 24.71 72.6839 24.8384L72.7481 24.9026C73.8183 26.1227 75.0598 26.7648 76.9648 26.7648C80.1755 26.7648 82.8083 24.3033 82.8083 18.9949C82.8083 13.708 80.1755 11.2036 76.9648 11.2036ZM75.809 24.4959C73.0478 24.4959 71.9347 22.227 71.9347 19.0163C71.9347 15.7842 73.0478 13.5367 75.809 13.5367C78.5702 13.5367 79.6832 15.7842 79.6832 19.0163C79.6618 22.2056 78.5488 24.4959 75.809 24.4959Z">
+                        </path>
+                        <path
+                            d="M16.4978 7.24219H9.99081C9.75536 7.24219 9.54131 7.32781 9.39148 7.54185L4.72526 13.3211C4.04031 14.1773 3.86907 14.9693 3.86907 16.1037V22.0114C2.34934 26.271 1.38613 29.1606 0.679774 31.772C0.61556 31.9432 0.701179 32.0288 0.851012 32.0288H1.55737C1.68579 32.0288 1.79282 31.9646 1.85703 31.8576C7.1868 18.287 12.9875 11.5659 16.6263 7.54185C16.7761 7.37062 16.7119 7.24219 16.4978 7.24219Z">
+                        </path>
+                        <path
+                            d="M16.6921 0.585813C16.2854 0.778455 16.0714 0.821265 15.6433 1.20655C13.7169 2.85471 12.4326 4.16039 11.2125 5.44468C11.0627 5.59451 11.1269 5.74434 11.3409 5.74434H18.5543C19.2179 5.74434 19.6032 6.12963 19.6032 6.79317V14.927C19.6032 15.141 19.7744 15.2052 19.9028 15.0126L24.248 9.34033C24.9543 8.41993 25.1684 8.14167 25.361 6.85739C25.6179 4.97377 25.468 2.08414 24.3336 0.885479C23.3276 -0.184755 18.7898 -0.227565 16.6921 0.585813Z">
+                        </path>
+                        <path
+                            d="M17.7811 8.86844C13.3075 13.8557 9.81859 19.0999 6.58648 25.4143C6.50086 25.5855 6.60788 25.7139 6.80053 25.6497L13.4788 23.5949C14.228 23.4022 14.656 23.0597 15.0199 22.4604L17.9952 17.5587C18.0594 17.4303 18.0808 17.2805 18.0808 17.1735V8.99687C18.0808 8.78282 17.931 8.6972 17.7811 8.86844Z">
+                        </path>
+                    </g>
+                    <path
+                        d="M295.541 26.4635C291.893 26.4635 290.025 24.5658 290.025 21.986H291.864C291.893 23.439 293.198 24.8623 295.541 24.8623C298.031 24.8623 299.218 23.6465 299.218 21.9564C299.218 20.6517 298.358 19.9104 296.875 19.6435L294.028 19.1098C291.538 18.6353 290.263 17.2417 290.263 15.255C290.263 12.616 292.427 10.9258 295.511 10.9258C298.209 10.9258 300.73 12.1712 300.73 15.1364H298.891C298.891 13.5648 297.409 12.527 295.481 12.527C293.495 12.527 292.101 13.5648 292.101 15.1957C292.101 16.1742 292.753 17.0638 294.473 17.3899L297.32 17.9237C299.84 18.3981 301.056 19.6138 301.056 21.8674C301.056 24.5064 299.069 26.4635 295.541 26.4635Z">
+                    </path>
+                    <path
+                        d="M281.719 26.4635C278.072 26.4635 275.463 23.9134 275.463 18.6946C275.463 13.6834 277.924 10.9258 281.808 10.9258C285.515 10.9258 287.828 13.3869 287.828 18.3388V19.0208H277.301C277.331 22.0453 278.458 24.8623 281.749 24.8623C284.24 24.8623 285.485 23.7355 285.723 22.0453H287.561C287.353 24.9216 284.952 26.4635 281.719 26.4635ZM285.545 17.4492C285.752 17.4492 285.93 17.3306 285.93 17.0341C285.93 14.2172 284.359 12.527 281.808 12.527C279.11 12.527 277.657 14.2765 277.361 17.4492H285.545Z">
+                    </path>
+                    <path
+                        d="M270.362 26.1968V11.1929H272.141V26.1968H270.362ZM270.006 7.6939V5.20312H272.497V7.6939H270.006Z">
+                    </path>
+                    <path
+                        d="M260.36 31.534C257.217 31.534 255.349 30.0217 254.696 28.5984L256.298 27.6792C256.95 29.2211 258.64 29.9031 260.39 29.9031C262.821 29.9031 264.689 28.8653 264.689 24.9809V24.4175C264.689 24.2396 264.6 24.121 264.452 24.121C264.304 24.121 264.244 24.2099 264.126 24.3285C263.118 25.4257 261.843 26.1077 260.182 26.1077C256.238 26.1077 253.955 22.9349 253.955 18.5167C253.955 14.0986 256.238 10.9258 260.182 10.9258C261.872 10.9258 263.177 11.6671 264.215 12.7939C264.363 12.9718 264.452 13.0311 264.571 13.0311C264.719 13.0311 264.808 12.9125 264.808 12.7346V11.1926H266.468V24.9809C266.468 29.4583 264.452 31.534 260.36 31.534ZM260.39 24.4768C263.295 24.4768 264.867 22.3418 264.867 18.4574C264.867 14.9585 263.444 12.5566 260.39 12.5566C257.306 12.5566 255.853 15.0178 255.853 18.5167C255.853 22.0157 257.306 24.4768 260.39 24.4768Z">
+                    </path>
+                    <path
+                        d="M245.411 26.4635C241.764 26.4635 239.154 23.9134 239.154 18.6946C239.154 13.6834 241.615 10.9258 245.5 10.9258C249.206 10.9258 251.519 13.3869 251.519 18.3388V19.0208H240.993C241.022 22.0453 242.149 24.8623 245.441 24.8623C247.931 24.8623 249.177 23.7355 249.414 22.0453H251.252C251.045 24.9216 248.643 26.4635 245.411 26.4635ZM249.236 17.4492C249.444 17.4492 249.621 17.3306 249.621 17.0341C249.621 14.2172 248.05 12.527 245.5 12.527C242.802 12.527 241.349 14.2765 241.052 17.4492H249.236Z">
+                    </path>
+                    <path
+                        d="M235.559 26.4591C232.802 26.4591 231.823 24.6799 231.823 22.3374V12.8191H229.955V11.3661H230.133C231.527 11.3661 232.06 10.9807 232.06 9.52771V7.21484H233.602V11.1882H237.931V12.8191H233.602V22.0706C233.602 23.82 234.195 24.8282 235.797 24.8282C236.449 24.8282 237.22 24.6503 237.665 24.4131L238.109 25.8957C237.546 26.1922 236.686 26.4591 235.559 26.4591Z">
+                    </path>
+                    <path
+                        d="M220.789 26.4635C218.12 26.4635 216.104 25.0698 216.104 22.2825C216.104 19.347 218.238 18.1016 221.144 17.5975L223.339 17.212C225.236 16.8859 225.8 16.53 225.8 15.4329C225.8 13.5945 224.288 12.527 222.034 12.527C220.047 12.527 218.594 13.1793 218.446 15.3439H216.608C216.726 12.2305 219.187 10.9258 222.034 10.9258C225.147 10.9258 227.609 12.3491 227.609 15.7294V26.1966H225.948V24.4471C225.948 24.2396 225.829 24.1506 225.711 24.1506C225.592 24.1506 225.503 24.2099 225.325 24.4175C224.525 25.3367 222.924 26.4635 220.789 26.4635ZM220.818 24.8623C223.546 24.8623 225.948 23.0831 225.948 20.1476V17.9237C225.563 18.3092 224.614 18.576 223.279 18.8132L221.619 19.1098C218.95 19.5842 217.942 20.622 217.942 22.3122C217.942 23.7058 218.861 24.8623 220.818 24.8623Z">
+                    </path>
+                    <path
+                        d="M207.705 26.1966V11.1926H209.366V13.2683C209.366 13.4462 209.455 13.5648 209.603 13.5648C209.751 13.5648 209.81 13.5352 209.959 13.298C210.789 11.9636 212.272 10.9258 213.962 10.9258C214.347 10.9258 214.703 10.9554 215.118 11.0444L215.088 12.9125C214.703 12.8532 213.962 12.7939 213.636 12.7939C211.234 12.7939 209.484 14.7213 209.484 17.4789V26.1966H207.705Z">
+                    </path>
+                    <path
+                        d="M202.7 26.463C199.942 26.463 198.964 24.6838 198.964 22.3413V12.823H197.096V11.37H197.274C198.667 11.37 199.201 10.9846 199.201 9.53161V7.21875H200.743V11.1921H205.072V12.823H200.743V22.0745C200.743 23.8239 201.336 24.8321 202.937 24.8321C203.59 24.8321 204.36 24.6542 204.805 24.417L205.25 25.8996C204.687 26.1961 203.827 26.463 202.7 26.463Z">
+                    </path>
+                    <path
+                        d="M188.107 26.5509C183.896 26.5509 180.635 24.6828 180.486 20.3832H182.384C182.503 23.6746 185.171 24.8607 188.166 24.8607C191.547 24.8607 193.474 23.4077 193.474 20.7687C193.474 18.8117 192.406 17.7738 190.242 17.1808L185.883 15.9651C182.799 15.1052 181.228 13.5632 181.228 10.6573C181.228 7.15839 184.193 5.02344 187.988 5.02344C192.021 5.02344 194.779 7.45491 194.897 11.1911H192.97C192.762 8.16656 190.627 6.71361 187.959 6.71361C185.201 6.71361 183.155 8.19621 183.155 10.6277C183.155 12.5254 184.104 13.5336 186.387 14.1859L190.746 15.4017C193.83 16.2616 195.401 17.8035 195.401 20.7391C195.401 24.3566 192.733 26.5509 188.107 26.5509Z">
+                    </path>
+                    <defs>
+                        <clipPath>
+                            <rect height="32" transform="translate(0.857422 0.0234375)" width="173"></rect>
+                        </clipPath>
+                    </defs>
+                </svg>
+                <h2 class="heading">
+                    Your portfolio, handled by the pros
+                </h2>
+                <p class="lead-text">
+                    Get timely market insights with an expert-managed portfolio that proactively adjusts your
+                    investments. Robinhood Gold members get zero management fees on every dollar over $100K.
+                </p>
+                <p class="lead-text">
+                    Terms apply. Gold subscription $5/month.
+                </p>
+                <a href="#" class="btn filled">
+                    <span>Get Started</span>
+                </a>
+            </div>
+            <p class="disclaimer">
+                For illustrative purposes only. Portfolio management offered through Robinhood Asset Management
+                (“Robinhood Strategies”), an SEC-registered investment advisor. Gold membership is offered by Robinhood
+                Gold, LLC.
+            </p>
+        </div>
+    </section>
+    <section class="features">
+        <div class="content-wrapper">
+            <h2 class="heading">
+                Robinhood Protection Guarantee
+            </h2>
+            <a href="#" class="btn outline">
+                <span>Learn more about our commitments</span>
+            </a>
+        </div>
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="./assets/images/illo_secure.svg" class="swiper-img" alt="">
+                    <p>
+                        We work hard to keep your data safe and secure.
+                    </p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="./assets/images/illo_protect.svg" class="swiper-img" alt="">
+                    <p>
+                        We protect your account from unauthorized activity.
+                    </p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="./assets/images/illo_multi-factor.svg" class="swiper-img" alt="">
+                    <p>
+                        We provide multi-factor authentication on all accounts.
+                    </p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="./assets/images/illo_247.svg" class="swiper-img" alt="">
+                    <p>
+                        We've got your back. We're available to you 24/7.
+                    </p>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="desktop-grid">
+            <div class="swiper-slide">
+                <img src="./assets/images/illo_secure.svg" class="swiper-img" alt="">
+                <p>
+                    We work hard to keep your data safe and secure.
+                </p>
+            </div>
+            <div class="swiper-slide">
+                <img src="./assets/images/illo_protect.svg" class="swiper-img" alt="">
+                <p>
+                    We protect your account from unauthorized activity.
+                </p>
+            </div>
+            <div class="swiper-slide">
+                <img src="./assets/images/illo_multi-factor.svg" class="swiper-img" alt="">
+                <p>
+                    We provide multi-factor authentication on all accounts.
+                </p>
+            </div>
+            <div class="swiper-slide">
+                <img src="./assets/images/illo_247.svg" class="swiper-img" alt="">
+                <p>
+                    We've got your back. We're available to you 24/7.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="preview">
+        <div class="preview-content-wrapper">
+            <h2 class="heading">
+                Become a better investor on the go, right in the app
+            </h2>
+            <p class="lead-text">
+                Here's a preview of the things you can learn when you sign up.
+            </p>
+            <a href="#" class="btn filled">
+                <span>Sign up to access Robinhood Learn</span>
+            </a>
+            <picture>
+                <source media="(max-width: 425px)" srcset="./assets/images/homepage_learn_phone.png">
+                <source srcset="./assets/images/homepage_learn_phone_2x.png">
+                <img alt="phone" src="./assets/images/homepage_learn_phone_2x.png">
+            </picture>
+        </div>
+    </section>
+    <section class="cta">
+        <div class="video-container">
+            <video loop muted playsinline autoplay preload="auto" class="cta-bg-video">
+                <source src="./assets/videos/Dotcom_Animation.webm" type="video/webm">
+                <img alt="Join a new generation of investors - Sign up" src="./assets/images/Investors_Hero.jpg"
+                    class="cta-fb">
+            </video>
+        </div>
+        <div class="gradient-overlay"></div>
+        <div class="cta-content-wrapper">
+            <h2 class="heading">
+                Join a new generation of investors
+            </h2>
+            <a href="#" class="btn filled">
+                <span>Sign up</span>
+            </a>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-top">
+            <ul class="footer-link-list">
+                <li><a href="#" class="footer-link">Customer Relationship Summaries</a></li>
+                <div class="link-seperator"></div>
+                <li><a href="#" class="footer-link">FINRA’s BrokerCheck</a></li>
+            </ul>
+            <div class="social-links">
+                <p>Follow us on</p>
+                <a href="#">
+                    <svg height="24" viewBox="0 0 24 24" width="24">
+                        <path
+                            d="M18.2439 2.25H21.5519L14.3249 10.51L22.8269 21.75H16.1699L10.9559 14.933L4.98991 21.75H1.67991L9.40991 12.915L1.25391 2.25H8.07991L12.7929 8.481L18.2439 2.25ZM17.0829 19.77H18.9159L7.08391 4.126H5.11691L17.0829 19.77Z"
+                            fill="#000000"></path>
+                    </svg>
+                </a>
+                <a href="#">
+                    <svg height="20" width="20">
+                        <path
+                            d="M10 0C7.28333 0 6.94417 0.0125 5.8775 0.06C4.8125 0.11 4.0875 0.2775 3.45 0.525C2.7925 0.78 2.23417 1.1225 1.67833 1.67833C1.1225 2.23417 0.779167 2.79167 0.525 3.45C0.2775 4.0875 0.109167 4.8125 0.06 5.8775C0.01 6.94417 0 7.28333 0 10C0 12.7167 0.0125 13.0558 0.06 14.1225C0.11 15.1867 0.2775 15.9125 0.525 16.55C0.78 17.2067 1.1225 17.7658 1.67833 18.3217C2.23417 18.8767 2.79167 19.2208 3.45 19.475C4.08833 19.7217 4.81333 19.8908 5.8775 19.94C6.94417 19.99 7.28333 20 10 20C12.7167 20 13.0558 19.9875 14.1225 19.94C15.1867 19.89 15.9125 19.7217 16.55 19.475C17.2067 19.22 17.7658 18.8767 18.3217 18.3217C18.8767 17.7658 19.2208 17.2092 19.475 16.55C19.7217 15.9125 19.8908 15.1867 19.94 14.1225C19.99 13.0558 20 12.7167 20 10C20 7.28333 19.9875 6.94417 19.94 5.8775C19.89 4.81333 19.7217 4.08667 19.475 3.45C19.22 2.7925 18.8767 2.23417 18.3217 1.67833C17.7658 1.1225 17.2092 0.779167 16.55 0.525C15.9125 0.2775 15.1867 0.109167 14.1225 0.06C13.0558 0.01 12.7167 0 10 0ZM10 1.8C12.6692 1.8 12.9875 1.81333 14.0417 1.85917C15.0167 1.905 15.5458 2.06667 15.8975 2.205C16.3658 2.38583 16.6975 2.6025 17.0492 2.95167C17.3983 3.30167 17.615 3.63417 17.7958 4.1025C17.9325 4.45417 18.0958 4.98333 18.14 5.95833C18.1875 7.01333 18.1983 7.33 18.1983 10C18.1983 12.67 18.1858 12.9875 18.1367 14.0417C18.0858 15.0167 17.9233 15.5458 17.7858 15.8975C17.5992 16.3658 17.3867 16.6975 17.0367 17.0492C16.6875 17.3983 16.35 17.615 15.8867 17.7958C15.5367 17.9325 14.9992 18.0958 14.0242 18.14C12.9625 18.1875 12.65 18.1983 9.975 18.1983C7.29917 18.1983 6.98667 18.1858 5.92583 18.1367C4.95 18.0858 4.4125 17.9233 4.0625 17.7858C3.58833 17.5992 3.2625 17.3867 2.91333 17.0367C2.5625 16.6875 2.33833 16.35 2.16333 15.8867C2.02583 15.5367 1.86417 14.9992 1.81333 14.0242C1.77583 12.9742 1.7625 12.65 1.7625 9.9875C1.7625 7.32417 1.77583 6.99917 1.81333 5.93667C1.86417 4.96167 2.02583 4.425 2.16333 4.075C2.33833 3.6 2.5625 3.275 2.91333 2.92417C3.2625 2.575 3.58833 2.35 4.0625 2.17583C4.4125 2.0375 4.93833 1.875 5.91333 1.825C6.97583 1.7875 7.28833 1.775 9.9625 1.775L10 1.8ZM10 4.865C7.1625 4.865 4.865 7.165 4.865 10C4.865 12.8375 7.165 15.135 10 15.135C12.8375 15.135 15.135 12.835 15.135 10C15.135 7.1625 12.835 4.865 10 4.865ZM10 13.3333C8.15833 13.3333 6.66667 11.8417 6.66667 10C6.66667 8.15833 8.15833 6.66667 10 6.66667C11.8417 6.66667 13.3333 8.15833 13.3333 10C13.3333 11.8417 11.8417 13.3333 10 13.3333ZM16.5383 4.6625C16.5383 5.325 16 5.8625 15.3383 5.8625C14.6758 5.8625 14.1383 5.32417 14.1383 4.6625C14.1383 4.00083 14.6767 3.46333 15.3383 3.46333C15.9992 3.4625 16.5383 4.00083 16.5383 4.6625Z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="#">
+                    <svg height="20" width="20">
+                        <path
+                            d="M17.0392 17.0433H14.0775V12.4025C14.0775 11.2958 14.055 9.87167 12.5342 9.87167C10.99 9.87167 10.7542 11.0758 10.7542 12.3208V17.0433H7.7925V7.5H10.6375V8.80083H10.6758C11.0733 8.05083 12.04 7.25917 13.4842 7.25917C16.485 7.25917 17.04 9.23417 17.04 11.805V17.0433H17.0392ZM4.4475 6.19417C3.49417 6.19417 2.72833 5.4225 2.72833 4.47333C2.72833 3.525 3.495 2.75417 4.4475 2.75417C5.3975 2.75417 6.1675 3.525 6.1675 4.47333C6.1675 5.4225 5.39667 6.19417 4.4475 6.19417ZM5.9325 17.0433H2.9625V7.5H5.9325V17.0433ZM18.5208 0H1.47583C0.66 0 0 0.645 0 1.44083V18.5592C0 19.3558 0.66 20 1.47583 20H18.5183C19.3333 20 20 19.3558 20 18.5592V1.44083C20 0.645 19.3333 0 18.5183 0H18.5208Z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="#">
+                    <svg height="20" viewBox="0 0 21 24" width="20">
+                        <path
+                            d="M15.072 0h-4.044v16.348c0 1.948-1.556 3.548-3.492 3.548s-3.491-1.6-3.491-3.548c0-1.913 1.52-3.478 3.388-3.548V8.696C3.319 8.766 0 12.139 0 16.348 0 20.59 3.388 24 7.57 24c4.184 0 7.572-3.444 7.572-7.652V7.965A9.366 9.366 0 0020.5 9.774V5.67c-3.042-.105-5.428-2.61-5.428-5.67z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="#">
+                    <svg height="20" viewBox="0 0 24 18" width="20">
+                        <path
+                            d="M23.76 4.2s-.233-1.655-.955-2.381C21.89.862 20.869.858 20.4.8 17.044.558 12.005.558 12.005.558h-.01S6.956.558 3.6.8C3.131.858 2.11.862 1.195 1.82c-.722.726-.951 2.38-.951 2.38S0 6.146 0 8.087v1.818c0 1.941.24 3.886.24 3.886s.233 1.655.95 2.382c.915.956 2.115.923 2.65 1.026 1.92.183 8.16.24 8.16.24s5.044-.01 8.4-.25c.469-.055 1.49-.06 2.405-1.016.722-.727.956-2.382.956-2.382S24 11.85 24 9.904V8.086c0-1.94-.24-3.886-.24-3.886zM9.52 12.112V5.367l6.483 3.384-6.483 3.361z">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="first-child">
+                <div>
+                    <p>
+                        <b>Product</b>
+                    </p>
+                    <ul class="footer-link-list">
+                        <li>
+                            <a href="#" class="footer-link">Invest</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Strategies</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Trading</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Retirement</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Gold</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Crypto</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Legend</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Options</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Futures</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Banking</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Credit Card</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Learn</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Snacks</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <p>
+                        <b>Legal & Regulatory</b>
+                    </p>
+                    <ul class="footer-link-list">
+                        <li>
+                            <a href="#" class="footer-link">
+                                Terms & Conditions
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">
+                                Disclosures
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">
+                                Robinhood Financial Entities US Online Privacy Statement
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">
+                                Robinhood Markets US Online Privacy Statement
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">
+                                Law Enforcement Requests
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link" style="display: flex; align-items: center; gap: 8px">
+                                Your Privacy Choices
+                                <img src="./assets/images/privacyoptions.svg" alt="Privacy option toggle" height="14px">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <p>
+                        <b>
+                            Company
+                        </b>
+                    </p>
+                    <ul class="footer-link-list">
+                        <li>
+                            <a href="#" class="footer-link">About us</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Blog</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Partner With Us</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Affiliates</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Press</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Careers</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Commitments</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Investor Relations</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Support</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">ESG</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Podcast</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Investor Index</a>
+                        </li>
+                        <li>
+                            <a href="#" class="footer-link">Robinhood Merch</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="second-child">
+                <div class="social-links">
+                    <p>Follow us on</p>
+                    <a href="#">
+                        <svg height="24" viewBox="0 0 24 24" width="24">
+                            <path
+                                d="M18.2439 2.25H21.5519L14.3249 10.51L22.8269 21.75H16.1699L10.9559 14.933L4.98991 21.75H1.67991L9.40991 12.915L1.25391 2.25H8.07991L12.7929 8.481L18.2439 2.25ZM17.0829 19.77H18.9159L7.08391 4.126H5.11691L17.0829 19.77Z"
+                                fill="#000000"></path>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg height="20" width="20">
+                            <path
+                                d="M10 0C7.28333 0 6.94417 0.0125 5.8775 0.06C4.8125 0.11 4.0875 0.2775 3.45 0.525C2.7925 0.78 2.23417 1.1225 1.67833 1.67833C1.1225 2.23417 0.779167 2.79167 0.525 3.45C0.2775 4.0875 0.109167 4.8125 0.06 5.8775C0.01 6.94417 0 7.28333 0 10C0 12.7167 0.0125 13.0558 0.06 14.1225C0.11 15.1867 0.2775 15.9125 0.525 16.55C0.78 17.2067 1.1225 17.7658 1.67833 18.3217C2.23417 18.8767 2.79167 19.2208 3.45 19.475C4.08833 19.7217 4.81333 19.8908 5.8775 19.94C6.94417 19.99 7.28333 20 10 20C12.7167 20 13.0558 19.9875 14.1225 19.94C15.1867 19.89 15.9125 19.7217 16.55 19.475C17.2067 19.22 17.7658 18.8767 18.3217 18.3217C18.8767 17.7658 19.2208 17.2092 19.475 16.55C19.7217 15.9125 19.8908 15.1867 19.94 14.1225C19.99 13.0558 20 12.7167 20 10C20 7.28333 19.9875 6.94417 19.94 5.8775C19.89 4.81333 19.7217 4.08667 19.475 3.45C19.22 2.7925 18.8767 2.23417 18.3217 1.67833C17.7658 1.1225 17.2092 0.779167 16.55 0.525C15.9125 0.2775 15.1867 0.109167 14.1225 0.06C13.0558 0.01 12.7167 0 10 0ZM10 1.8C12.6692 1.8 12.9875 1.81333 14.0417 1.85917C15.0167 1.905 15.5458 2.06667 15.8975 2.205C16.3658 2.38583 16.6975 2.6025 17.0492 2.95167C17.3983 3.30167 17.615 3.63417 17.7958 4.1025C17.9325 4.45417 18.0958 4.98333 18.14 5.95833C18.1875 7.01333 18.1983 7.33 18.1983 10C18.1983 12.67 18.1858 12.9875 18.1367 14.0417C18.0858 15.0167 17.9233 15.5458 17.7858 15.8975C17.5992 16.3658 17.3867 16.6975 17.0367 17.0492C16.6875 17.3983 16.35 17.615 15.8867 17.7958C15.5367 17.9325 14.9992 18.0958 14.0242 18.14C12.9625 18.1875 12.65 18.1983 9.975 18.1983C7.29917 18.1983 6.98667 18.1858 5.92583 18.1367C4.95 18.0858 4.4125 17.9233 4.0625 17.7858C3.58833 17.5992 3.2625 17.3867 2.91333 17.0367C2.5625 16.6875 2.33833 16.35 2.16333 15.8867C2.02583 15.5367 1.86417 14.9992 1.81333 14.0242C1.77583 12.9742 1.7625 12.65 1.7625 9.9875C1.7625 7.32417 1.77583 6.99917 1.81333 5.93667C1.86417 4.96167 2.02583 4.425 2.16333 4.075C2.33833 3.6 2.5625 3.275 2.91333 2.92417C3.2625 2.575 3.58833 2.35 4.0625 2.17583C4.4125 2.0375 4.93833 1.875 5.91333 1.825C6.97583 1.7875 7.28833 1.775 9.9625 1.775L10 1.8ZM10 4.865C7.1625 4.865 4.865 7.165 4.865 10C4.865 12.8375 7.165 15.135 10 15.135C12.8375 15.135 15.135 12.835 15.135 10C15.135 7.1625 12.835 4.865 10 4.865ZM10 13.3333C8.15833 13.3333 6.66667 11.8417 6.66667 10C6.66667 8.15833 8.15833 6.66667 10 6.66667C11.8417 6.66667 13.3333 8.15833 13.3333 10C13.3333 11.8417 11.8417 13.3333 10 13.3333ZM16.5383 4.6625C16.5383 5.325 16 5.8625 15.3383 5.8625C14.6758 5.8625 14.1383 5.32417 14.1383 4.6625C14.1383 4.00083 14.6767 3.46333 15.3383 3.46333C15.9992 3.4625 16.5383 4.00083 16.5383 4.6625Z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg height="20" width="20">
+                            <path
+                                d="M17.0392 17.0433H14.0775V12.4025C14.0775 11.2958 14.055 9.87167 12.5342 9.87167C10.99 9.87167 10.7542 11.0758 10.7542 12.3208V17.0433H7.7925V7.5H10.6375V8.80083H10.6758C11.0733 8.05083 12.04 7.25917 13.4842 7.25917C16.485 7.25917 17.04 9.23417 17.04 11.805V17.0433H17.0392ZM4.4475 6.19417C3.49417 6.19417 2.72833 5.4225 2.72833 4.47333C2.72833 3.525 3.495 2.75417 4.4475 2.75417C5.3975 2.75417 6.1675 3.525 6.1675 4.47333C6.1675 5.4225 5.39667 6.19417 4.4475 6.19417ZM5.9325 17.0433H2.9625V7.5H5.9325V17.0433ZM18.5208 0H1.47583C0.66 0 0 0.645 0 1.44083V18.5592C0 19.3558 0.66 20 1.47583 20H18.5183C19.3333 20 20 19.3558 20 18.5592V1.44083C20 0.645 19.3333 0 18.5183 0H18.5208Z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg height="20" viewBox="0 0 21 24" width="20">
+                            <path
+                                d="M15.072 0h-4.044v16.348c0 1.948-1.556 3.548-3.492 3.548s-3.491-1.6-3.491-3.548c0-1.913 1.52-3.478 3.388-3.548V8.696C3.319 8.766 0 12.139 0 16.348 0 20.59 3.388 24 7.57 24c4.184 0 7.572-3.444 7.572-7.652V7.965A9.366 9.366 0 0020.5 9.774V5.67c-3.042-.105-5.428-2.61-5.428-5.67z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg height="20" viewBox="0 0 24 18" width="20">
+                            <path
+                                d="M23.76 4.2s-.233-1.655-.955-2.381C21.89.862 20.869.858 20.4.8 17.044.558 12.005.558 12.005.558h-.01S6.956.558 3.6.8C3.131.858 2.11.862 1.195 1.82c-.722.726-.951 2.38-.951 2.38S0 6.146 0 8.087v1.818c0 1.941.24 3.886.24 3.886s.233 1.655.95 2.382c.915.956 2.115.923 2.65 1.026 1.92.183 8.16.24 8.16.24s5.044-.01 8.4-.25c.469-.055 1.49-.06 2.405-1.016.722-.727.956-2.382.956-2.382S24 11.85 24 9.904V8.086c0-1.94-.24-3.886-.24-3.886zM9.52 12.112V5.367l6.483 3.384-6.483 3.361z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="content-wrapper">
+                    <p>
+                        <b>All investing involves risk.</b>
+                    </p>
+                    <p>
+                        <b>Brokerage services</b> are offered through Robinhood Financial LLC, (<b>“RHF”</b>) a
+                        registered
+                        broker
+                        dealer (member <a href="#">SIPC</a>), and clearing services through Robinhood Securities, LLC,
+                        (<b>“RHS”</b>)
+                        a
+                        registered broker dealer (member <a href="#">SIPC</a>).
+                    </p>
+                    <p>
+                        <b>Portfolio Management</b> offered through Robinhood Asset Management (“Robinhood Strategies”
+                        or
+                        “RAM”), an SEC-registered investment advisor. For additional information about Robinhood
+                        Strategies, including about services, fees, risks, and conflicts of interest, please see our
+                        <a href="#">firm’s brochure</a>.
+                    </p>
+                    <p>
+                        <b>Futures and cleared swaps trading</b> is offered by Robinhood Derivatives, LLC, (“RHD”) a
+                        registered
+                        futures commission merchant with the Commodity Futures Trading Commission (CFTC) and a Member of
+                        the National Futures Association (NFA). RHD is not FDIC insured or SIPC protected.
+                    </p>
+                    <p>
+                        <b>Cryptocurrency services</b> are offered through an account with Robinhood Crypto, LLC (“RHC”)
+                        (NMLS
+                        ID: 1702840). Robinhood Crypto is licensed to engage in virtual currency business activity by
+                        the New York State Department of Financial Services. Review a list of <a href="#">RHC's
+                            licenses</a> for
+                        more
+                        information. Cryptocurrency held through Robinhood Crypto is not FDIC insured or SIPC protected.
+                    </p>
+                    <p>
+                        <b>The Robinhood spending account</b> is offered through Robinhood Money, LLC (“RHY”) (NMLS ID:
+                        1990968), a licensed money transmitter. Review a <a href="#">list of our licenses</a> for more
+                        information.
+                    </p>
+                    <p>
+                        <b>The Robinhood Cash Card</b> is a prepaid card issued by Sutton Bank, Member FDIC, pursuant to
+                        a
+                        license from Mastercard® International Incorporated. Mastercard and the circles design are
+                        registered trademarks of Mastercard International Incorporated.
+                    </p>
+                    <p>
+                        <b>Robinhood Gold Card</b> is subject to credit approval and underwriting. Robinhood Gold Card
+                        is
+                        offered by Robinhood Credit, Inc., and is issued by Coastal Community Bank, pursuant to a
+                        license from Visa U.S.A. Inc. Robinhood Credit, Inc. (“RCT”), is a financial technology company,
+                        not a bank.
+                    </p>
+                    <p>
+                        <b>Robinhood Gold</b> is a subscription-based membership program of premium services offered
+                        through
+                        Robinhood Gold, LLC (<b>“RHG”</b>).
+                    </p>
+                    <p>
+                        RHF, RAM, RHY, RHC, RCT, RHG, RHD, and RHS are affiliated entities and wholly owned subsidiaries
+                        of Robinhood Markets, Inc. RHF, RAM, RHY, RHC, RCT, RHG, RHD, and RHS are not banks. Investing
+                        products offered by RHF are not FDIC insured and involve risk, including possible loss of
+                        principal.
+                    </p>
+                    <p>
+                        RHY is not a member of FINRA, and products are not subject to SIPC protection, but funds held in
+                        the Robinhood spending account and Robinhood Cash Card account may be eligible for FDIC
+                        pass-through insurance (review the <a href="#">Robinhood Cash Card Agreement</a> and the
+                        <a href="#">Robinhood Spending Account Agreement</a>).
+                    </p>
+                    <p>
+                        Options trading entails significant risk and is not appropriate for all customers. Customers
+                        must read and understand the <a href="#">Characteristics and Risks of Standardized Options</a>
+                        before
+                        engaging
+                        in any options trading strategies. Options transactions are often complex and may involve the
+                        potential of losing the entire investment in a relatively short period of time. Certain complex
+                        options strategies carry additional risk, including the potential for losses that may exceed the
+                        original investment amount.
+                    </p>
+                    <p>
+                        RO 4340406
+                    </p>
+                    <p>
+                        Robinhood, 85 Willow Road, Menlo Park, CA 94025. © 2025 Robinhood. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <svg fill="currentColor" viewBox="0 0 1440 297" width="100%" class="logo">
+            <path
+                d="M293.383 101.379C249.194 101.379 222.117 129.716 222.117 179.522C222.117 229.113 249.194 257.451 293.383 257.451C338.005 257.451 364.432 229.113 364.432 179.522C364.432 129.716 338.005 101.379 293.383 101.379ZM293.383 234.695C265.44 234.695 254.176 211.939 254.176 179.737C254.393 147.105 265.44 124.564 293.383 124.564C321.326 124.564 332.59 147.105 332.59 179.522C332.59 211.724 321.326 234.695 293.383 234.695Z">
+            </path>
+            <path
+                d="M174.459 158.911C172.076 158.053 171.21 156.55 171.21 154.618C171.21 153.115 172.509 151.397 174.242 150.324C191.138 142.166 201.319 126.924 201.319 105.885C201.319 68.9606 177.925 46.634 130.92 46.634H49.9062V254.658H81.965V168.787H133.736C158.213 168.787 166.444 179.091 167.094 195.836L170.127 254.658H201.752L198.503 193.689C197.203 173.509 189.189 164.278 174.459 158.911ZM128.753 144.098H81.965V71.9661H128.753C153.014 71.9661 167.96 83.7735 167.96 108.032C167.96 132.506 153.014 144.098 128.753 144.098Z">
+            </path>
+            <path
+                d="M1359.77 39.5494V116.405C1359.77 119.41 1358.03 120.913 1355.87 120.913C1354.35 120.913 1353.05 120.054 1351.97 118.766C1351.97 118.766 1351.75 118.551 1351.32 118.551C1340.49 107.173 1328.79 101.377 1310.38 101.377C1277.67 101.377 1251.03 126.28 1251.03 179.52C1251.03 232.761 1277.67 257.449 1310.38 257.449C1329.44 257.449 1342.22 251.223 1352.84 238.772L1353.49 238.128C1354.79 236.84 1355.87 235.981 1357.38 235.981C1359.55 235.981 1361.28 237.484 1361.28 240.489V254.658H1390.09V39.5494H1359.77ZM1321.86 234.693C1293.92 234.693 1282.65 211.937 1282.65 179.735C1282.65 147.318 1293.92 124.777 1321.86 124.777C1350.02 124.777 1361.07 147.318 1361.07 179.735C1361.07 211.722 1350.02 234.693 1321.86 234.693Z">
+            </path>
+            <path
+                d="M698.242 101.379C676.364 101.379 663.584 111.254 654.053 123.92C652.753 125.423 651.67 126.926 649.504 126.926C647.338 126.926 645.605 125.423 645.605 122.417V104.384H617.012V254.66H647.338V171.794C647.338 144.959 661.851 125.852 684.595 125.852C706.04 125.852 716.654 138.089 716.654 164.709V254.875H746.98V156.766C746.98 122.203 731.167 101.379 698.242 101.379Z">
+            </path>
+            <path
+                d="M860.269 101.377C839.907 101.377 826.694 110.394 817.813 121.772C816.513 123.274 815.43 124.777 813.264 124.777C811.098 124.777 809.365 123.274 809.365 120.269V39.5494H779.039V254.658H809.365V171.792C809.365 144.957 823.878 125.85 846.622 125.85C868.067 125.85 878.681 138.087 878.681 164.707V254.873H909.007V156.764C909.007 122.201 893.194 101.377 860.269 101.377Z">
+            </path>
+            <path
+                d="M1003.66 101.379C959.467 101.379 932.391 129.716 932.391 179.522C932.391 229.113 959.467 257.451 1003.66 257.451C1048.28 257.451 1074.71 229.113 1074.71 179.522C1074.49 129.716 1048.28 101.379 1003.66 101.379ZM1003.66 234.695C975.713 234.695 964.449 211.939 964.449 179.737C964.449 147.32 975.713 124.779 1003.66 124.779C1031.6 124.779 1042.86 147.32 1042.86 179.737C1042.65 211.724 1031.6 234.695 1003.66 234.695Z">
+            </path>
+            <path
+                d="M1162.66 101.379C1118.48 101.379 1091.4 129.716 1091.4 179.522C1091.4 229.113 1118.48 257.451 1162.66 257.451C1207.29 257.451 1233.71 229.113 1233.71 179.522C1233.71 129.716 1207.29 101.379 1162.66 101.379ZM1162.66 234.695C1134.72 234.695 1123.46 211.939 1123.46 179.737C1123.46 147.32 1134.72 124.779 1162.66 124.779C1190.61 124.779 1201.87 147.32 1201.87 179.737C1201.87 211.724 1190.61 234.695 1162.66 234.695Z">
+            </path>
+            <path d="M584.093 104.386H553.768V254.662H584.093V104.386Z"></path>
+            <path d="M584.941 39.5494H552.449V73.8981H584.941V39.5494Z"></path>
+            <path
+                d="M469.057 101.377C450.212 101.377 438.732 107.173 428.117 118.122L427.468 118.766C426.168 120.054 425.085 120.913 423.569 120.913C421.402 120.913 419.67 119.41 419.67 116.405V39.5494H389.344V254.658H417.937V240.489C417.937 237.484 419.67 235.981 421.836 235.981C423.352 235.981 424.652 236.84 425.735 238.128L426.385 238.772C437.215 251.009 449.779 257.449 469.057 257.449C501.549 257.449 528.193 232.761 528.193 179.52C528.193 126.494 501.549 101.377 469.057 101.377ZM457.36 234.693C429.417 234.693 418.153 211.937 418.153 179.735C418.153 147.318 429.417 124.777 457.36 124.777C485.303 124.777 496.567 147.318 496.567 179.735C496.351 211.722 485.087 234.693 457.36 234.693Z">
+            </path>
+        </svg>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const subMenuTrigger = document.getElementById('submenu-trigger');
+        const subMenu = document.querySelector('.submenu');
+        const navArrow = document.querySelector('.nav-arrow')
+
+        subMenuTrigger.addEventListener('click', () => {
+            subMenu.classList.toggle('show');
+            navArrow.classList.toggle('rotate');
+        });
+
+        const swiper = new Swiper('.swiper', {
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        });
+
+        const hamMenu = document.querySelector('.ham-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        hamMenu.addEventListener('click', () => {
+            hamMenu.classList.toggle('animate');
+            mobileMenu.classList.toggle('visible');
+        })
+
+        const langBtn = document.querySelector('.language>button')
+        const langArrow = document.querySelector('.language>button .nav-arrow');
+        const langSubMenu = document.querySelector('.lang-submenu')
+        langBtn.addEventListener('click', () => {
+            langSubMenu.classList.toggle('visible');
+            langArrow.classList.toggle('rotate');
+        })
+    </script>
 </body>
 
 </html>
