@@ -10,9 +10,9 @@ The goal of this hackathon is to **replicate a website to pixel-perfect detail**
 ### First Project
 
 - **Original Website Replicated:** Robinhood
-- **Live Demo:**
-- **Enhancement Added:**
-- **Tech Stack:**
+- **Live Demo:** [Robinhood Clone](https://robinhood-clone-project.netlify.app/robinhood-clone/)
+- **Enhancement Added:** Fixed visual inconsistencies found in the original website
+- **Tech Stack:** HTML, CSS, JAVASCRIPT
 
 ---
 
